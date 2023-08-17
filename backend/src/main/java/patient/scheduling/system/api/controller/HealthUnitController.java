@@ -21,18 +21,13 @@ public class HealthUnitController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<HealthUnitDTO> findAll() {
-        var healthUnits = healthUnitService.findAll();
-
-        return healthUnits
-                .stream()
-                .map(hu -> new HealthUnitDTO(hu.getName(), hu.getAddress()))
-                .toList();
+    public List<HealthUnit> findAll() {
+        return healthUnitService.findAll();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void save(@Valid @RequestBody HealthUnitDTO dto) {
+    public void save(@Valid @RequestBody HealthUnitDTO dto){
         var healthUnit = new HealthUnit();
         BeanUtils.copyProperties(dto, healthUnit);
 
