@@ -1,5 +1,6 @@
 package patient.scheduling.system.api.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,6 +20,7 @@ public class Medic {
     private String specialty;
     @ManyToOne
     private HealthUnit healthUnit;
+    @JsonIgnore
     @OneToMany(mappedBy = "medic")
     private List<Schedule> schedules;
 }

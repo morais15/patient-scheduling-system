@@ -25,9 +25,21 @@ public class HealthUnitController {
         return healthUnitService.findAll();
     }
 
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public HealthUnit findById(@PathVariable Long id) {
+        return healthUnitService.findByIdOr404(id);
+    }
+
+    @PatchMapping("/{id}/medics")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void addMedics(@PathVariable("id") Long healthUnitId, @RequestBody List<Long> medicIds) {
+        healthUnitService.addMedics(healthUnitId, medicIds);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void save(@Valid @RequestBody HealthUnitDTO dto){
+    public void save(@Valid @RequestBody HealthUnitDTO dto) {
         var healthUnit = new HealthUnit();
         BeanUtils.copyProperties(dto, healthUnit);
 
