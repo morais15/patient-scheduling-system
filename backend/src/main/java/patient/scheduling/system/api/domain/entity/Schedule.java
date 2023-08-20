@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import patient.scheduling.system.api.domain.enums.StatusENUM;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -16,7 +17,7 @@ public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Instant date;
+    private LocalDateTime dateTime;
     @Enumerated(EnumType.STRING)
     private StatusENUM status;
     @ManyToOne

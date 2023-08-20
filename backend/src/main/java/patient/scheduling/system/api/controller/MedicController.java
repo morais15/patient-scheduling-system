@@ -10,6 +10,7 @@ import patient.scheduling.system.api.domain.dto.MedicDTO;
 import patient.scheduling.system.api.domain.dto.ScheduleDTO;
 import patient.scheduling.system.api.domain.entity.Medic;
 import patient.scheduling.system.api.domain.entity.Schedule;
+import patient.scheduling.system.api.domain.request.CreateSchedulesReq;
 import patient.scheduling.system.api.service.MedicService;
 
 import java.util.List;
@@ -52,6 +53,22 @@ public class MedicController {
                 .toList();
 
         medicService.addSchedules(medicId, schedules);
+    }
+
+    @PostMapping("/{id}/create-schedules")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createSchedules(@PathVariable("id") Long medicId, @RequestBody CreateSchedulesReq csr) {
+        medicService.createSchedules(
+                medicId,
+                csr.status(),
+                csr.startTime(),
+                csr.endTime(),
+                csr.stepMinutes(),
+                csr.startDate(),
+                csr.scheduleDurationDays(),
+                csr.lunchTime(),
+                csr.lunchDurationMinutes()
+        );
     }
 
     @PostMapping
