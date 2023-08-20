@@ -20,7 +20,4 @@ public class Medic {
     private String specialty;
     @ManyToOne
     private HealthUnit healthUnit;
-    @JsonIgnore
-    @OneToMany(mappedBy = "medic")
-    private List<Schedule> schedules;
 }

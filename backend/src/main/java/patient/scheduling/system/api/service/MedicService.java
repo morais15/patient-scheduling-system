@@ -10,7 +10,9 @@ import patient.scheduling.system.api.domain.entity.Schedule;
 import patient.scheduling.system.api.domain.enums.StatusENUM;
 import patient.scheduling.system.api.repository.MedicRepository;
 
-import java.time.*;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -72,16 +74,10 @@ public class MedicService {
     public void addSchedules(Long medicId, List<Schedule> schedules) {
         var medic = findByIdOr404(medicId);
 
-        var schedulesSaved = schedules
-                .stream()
-                .map(schedule -> {
-                    schedule.setMedic(medic);
-                    return scheduleService.save(schedule);
-                })
-                .toList();
-
-        medic.getSchedules().addAll(schedulesSaved);
-        medicRepository.save(medic);
+        schedules.forEach(schedule -> {
+            schedule.setMedic(medic);
+            scheduleService.save(schedule);
+        });
     }
 
     @Transactional

@@ -40,11 +40,10 @@ public class HealthUnitService {
                 .map(medicService::findByIdOr404)
                 .toList();
 
-        medics.forEach(medic -> medic.setHealthUnit(healthUnit));
-        healthUnit.getMedics().addAll(medics);
-
-        medics.forEach(medicService::save);
-        healthUnitRepository.save(healthUnit);
+        medics.forEach(medic -> {
+            medic.setHealthUnit(healthUnit);
+            medicService.save(medic);
+        });
     }
 
     @Transactional

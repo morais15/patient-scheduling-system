@@ -18,7 +18,4 @@ public class HealthUnit {
     private Long id;
     private String name;
     private String address;
-    @JsonIgnore
-    @OneToMany(mappedBy = "healthUnit")
-    private List<Medic> medics;
 }
