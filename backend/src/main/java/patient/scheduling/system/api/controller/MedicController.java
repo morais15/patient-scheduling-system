@@ -10,7 +10,7 @@ import patient.scheduling.system.api.domain.dto.MedicDTO;
 import patient.scheduling.system.api.domain.dto.ScheduleDTO;
 import patient.scheduling.system.api.domain.entity.Medic;
 import patient.scheduling.system.api.domain.entity.Schedule;
-import patient.scheduling.system.api.domain.request.CreateSchedulesReq;
+import patient.scheduling.system.api.domain.dto.CreateSchedulesDTO;
 import patient.scheduling.system.api.service.MedicService;
 
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "Medic")
-@RequestMapping("/medic")
+@RequestMapping("/medics")
 public class MedicController {
     private final MedicService medicService;
 
@@ -57,25 +57,25 @@ public class MedicController {
 
     @PostMapping("/{id}/create-schedules")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createSchedules(@PathVariable("id") Long medicId, @RequestBody CreateSchedulesReq csr) {
+    public void createSchedules(@PathVariable("id") Long medicId, @RequestBody CreateSchedulesDTO csd) {
         medicService.createSchedules(
                 medicId,
-                csr.status(),
-                csr.startTime(),
-                csr.endTime(),
-                csr.stepMinutes(),
-                csr.startDate(),
-                csr.scheduleDurationDays(),
-                csr.lunchTime(),
-                csr.lunchDurationMinutes()
+                csd.status(),
+                csd.startTime(),
+                csd.endTime(),
+                csd.stepMinutes(),
+                csd.startDate(),
+                csd.scheduleDurationDays(),
+                csd.lunchTime(),
+                csd.lunchDurationMinutes()
         );
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void save(@Valid @RequestBody MedicDTO dto) {
+    public void save(@Valid @RequestBody MedicDTO medicDTO) {
         var medic = new Medic();
-        BeanUtils.copyProperties(dto, medic);
+        BeanUtils.copyProperties(medicDTO, medic);
 
         medicService.save(medic);
     }

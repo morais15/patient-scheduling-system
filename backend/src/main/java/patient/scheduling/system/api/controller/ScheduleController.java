@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "Schedule")
-@RequestMapping("/schedule")
+@RequestMapping("/schedules")
 public class ScheduleController {
     private final ScheduleService scheduleService;
 
@@ -39,9 +39,9 @@ public class ScheduleController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void save(@Valid @RequestBody ScheduleDTO dto) {
+    public void save(@Valid @RequestBody ScheduleDTO scheduleDTO) {
         var schedule = new Schedule();
-        BeanUtils.copyProperties(dto, schedule);
+        BeanUtils.copyProperties(scheduleDTO, schedule);
 
         scheduleService.save(schedule);
     }

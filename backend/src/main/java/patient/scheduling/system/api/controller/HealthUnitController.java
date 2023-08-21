@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "Health Unit")
-@RequestMapping("/health-unit")
+@RequestMapping("/health-units")
 public class HealthUnitController {
     private final HealthUnitService healthUnitService;
 
@@ -39,9 +39,9 @@ public class HealthUnitController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void save(@Valid @RequestBody HealthUnitDTO dto) {
+    public void save(@Valid @RequestBody HealthUnitDTO healthUnitDTO) {
         var healthUnit = new HealthUnit();
-        BeanUtils.copyProperties(dto, healthUnit);
+        BeanUtils.copyProperties(healthUnitDTO, healthUnit);
 
         healthUnitService.save(healthUnit);
     }
