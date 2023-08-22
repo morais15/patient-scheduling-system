@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { HealthUnit } from './domain/health-unit';
+import { HealthUnit } from '../domain/health-unit';
+import { HealthUnitsService } from '../service/health-units.service';
 
 @Component({
   selector: 'app-health-units',
@@ -7,6 +8,8 @@ import { HealthUnit } from './domain/health-unit';
   styleUrls: ['./health-units.component.scss']
 })
 export class HealthUnitsComponent {
-  healthUnits: HealthUnit[] = [];
+  constructor(private healthUnitsService: HealthUnitsService){ }
+
+  healthUnits: HealthUnit[] = this.healthUnitsService.list();
   displayedColumns = ['name', 'address']
 }
