@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HealthUnit } from '../domain/health-unit';
 import { HealthUnitsService } from '../service/health-units.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-health-units',
@@ -8,8 +9,10 @@ import { HealthUnitsService } from '../service/health-units.service';
   styleUrls: ['./health-units.component.scss']
 })
 export class HealthUnitsComponent {
-  constructor(private healthUnitsService: HealthUnitsService){ }
-
-  healthUnits: HealthUnit[] = this.healthUnitsService.list();
+  healthUnits: Observable<HealthUnit[]>;
   displayedColumns = ['name', 'address']
+
+  constructor(private healthUnitsService: HealthUnitsService){
+    this.healthUnits = this.healthUnitsService.listAll();
+  }
 }
