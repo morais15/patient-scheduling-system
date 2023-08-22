@@ -9,10 +9,10 @@ import { Observable } from 'rxjs';
   styleUrls: ['./health-units.component.scss']
 })
 export class HealthUnitsComponent {
-  healthUnits: Observable<HealthUnit[]>;
+  healthUnits$: Observable<HealthUnit[]>;
   displayedColumns = ['name', 'address']
 
   constructor(private healthUnitsService: HealthUnitsService){
-    this.healthUnits = this.healthUnitsService.listAll();
+    this.healthUnits$ = this.healthUnitsService.listAll();
   }
 }
