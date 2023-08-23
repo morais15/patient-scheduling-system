@@ -4,6 +4,7 @@ import { HealthUnitsService } from '../service/health-units.service';
 import { Observable, catchError, of } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-health-units',
@@ -12,9 +13,14 @@ import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/err
 })
 export class HealthUnitsComponent {
   healthUnits$: Observable<HealthUnit[]>;
-  displayedColumns = ['name', 'address']
+  displayedColumns = ['id', 'name', 'address', 'actions']
 
-  constructor(private healthUnitsService: HealthUnitsService, private dialog: MatDialog) {
+  constructor(
+    private healthUnitsService: HealthUnitsService,
+    private dialog: MatDialog,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {
     this.healthUnits$ = this.healthUnitsService
       .listAll()
       .pipe(
@@ -29,5 +35,9 @@ export class HealthUnitsComponent {
     this.dialog.open(ErrorDialogComponent, {
       data: errorMsg
     })
+  }
+
+  onAdd() {
+    this.router.navigate(['new'], {relativeTo: this.activatedRoute})
   }
 }
