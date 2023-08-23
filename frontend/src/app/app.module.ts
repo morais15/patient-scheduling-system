@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HealthUnitsComponent } from './health-units/component/health-units.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppMaterialModule } from './shared/app-material/app-material.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +17,7 @@ import { AppMaterialModule } from './shared/app-material/app-material.module';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    AppMaterialModule,
+    SharedModule,
     HttpClientModule
   ],
   providers: [],

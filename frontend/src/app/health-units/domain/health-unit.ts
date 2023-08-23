@@ -1,5 +1,5 @@
 export interface HealthUnit {
-    _id: Number,
+    id: Number,
     name: String,
     address: String
 }
