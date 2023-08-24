@@ -4,7 +4,7 @@
     </mat-card-header>
 
     <mat-card-content>
-        <form [formGroup]="form">
+        <mat-form [formGroup]="form">
             <mat-form-field>
                 <mat-label>Id</mat-label>
                 <input matInput formControlName="id">
@@ -19,7 +19,7 @@
                 <mat-label>Address</mat-label>
                 <input matInput formControlName="address">
             </mat-form-field>
-        </form>
+        </mat-form>
     </mat-card-content>
     <mat-card-actions>
         <button mat-raised-button color="primary" (click)="onSave()">Save</button>
