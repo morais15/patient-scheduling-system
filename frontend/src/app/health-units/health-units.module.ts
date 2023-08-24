@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { HealthUnitsRoutingModule } from './health-units-routing.module';
 import { FormComponent } from './component/form/form.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AppMaterialModule } from '../shared/app-material/app-material.module';
 
 
 @NgModule({
@@ -11,7 +13,9 @@ import { FormComponent } from './component/form/form.component';
   ],
   imports: [
     CommonModule,
-    HealthUnitsRoutingModule
+    HealthUnitsRoutingModule,
+    ReactiveFormsModule,
+    AppMaterialModule
   ]
 })
 export class HealthUnitsModule { }
