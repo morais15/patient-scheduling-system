@@ -38,6 +38,6 @@ export class HealthUnitsComponent {
   }
 
   onAdd() {
-    this.router.navigate(['new'], {relativeTo: this.activatedRoute})
+    this.router.navigate(['new'], { relativeTo: this.activatedRoute })
   }
 }

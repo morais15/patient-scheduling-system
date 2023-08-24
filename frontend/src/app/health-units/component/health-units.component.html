@@ -7,31 +7,31 @@
 
                 <!-- Id Column -->
                 <ng-container matColumnDef="id">
-                    <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>>
-                    <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>>
+                    <mat-header-cell *matHeaderCellDef class="id-column"> Id </mat-header-cell>
+                    <mat-cell *matCellDef="let element" class="id-column"> {{element.id}} </mat-cell>
                 </ng-container>
 
                 <!-- Name Column -->
                 <ng-container matColumnDef="name">
-                    <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>>
-                    <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>>
+                    <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
                 </ng-container>
 
                 <!-- Address Column -->
                 <ng-container matColumnDef="address">
-                    <mat-header-cell *matHeaderCellDef> Address </mat-header-cell>>
-                    <mat-cell *matCellDef="let element"> {{element.address}} </mat-cell>>
+                    <mat-header-cell *matHeaderCellDef> Address </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.address}} </mat-cell>
                 </ng-container>
 
                 <!-- Actions Column -->
                 <ng-container matColumnDef="actions">
-                    <mat-header-cell *matHeaderCellDef>
+                    <mat-header-cell *matHeaderCellDef class="action-column">
                         <button mat-mini-fab color="primary" (click)="onAdd()">
                             <mat-icon>add</mat-icon>
                         </button>
-                    </mat-header-cell>>
+                    </mat-header-cell>
 
-                    <mat-cell *matCellDef="let element">
+                    <mat-cell *matCellDef="let element" class="action-column">
                         <button mat-icon-button>
                             <mat-icon>edit</mat-icon>
                         </button>
@@ -39,12 +39,12 @@
                         <button mat-icon-button>
                             <mat-icon>delete</mat-icon>
                         </button>
-                    </mat-cell>>
+                    </mat-cell>
                 </ng-container>
 
-                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>>
-                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>>
-            </mat-table>>
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
         </div>
     </mat-card-content>
 </mat-card>
