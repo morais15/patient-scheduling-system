@@ -2,10 +2,8 @@
     <mat-card-content>
         <mat-toolbar color="secondary">Health Units</mat-toolbar>
 
-        <app-grid *ngIf="healthUnits$ | async as healthUnits; else loading"
-        [healthUnits]="healthUnits"
-        (add)="onAdd()">
-        </app-grid>
+        <app-grid *ngIf="healthUnits$ | async as healthUnits; else loading" [healthUnits]="healthUnits" (add)="onAdd()"
+            (edit)="onEdit($event)"></app-grid>
     </mat-card-content>
 </mat-card>
 

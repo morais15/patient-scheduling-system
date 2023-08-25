@@ -39,4 +39,8 @@ export class HealthUnitsComponent {
   onAdd() {
     this.router.navigate(['new'], { relativeTo: this.activatedRoute })
   }
+
+  onEdit(healthUnit: HealthUnit) {
+    this.router.navigate(['edit', healthUnit.id], { relativeTo: this.activatedRoute })
+  }
 }

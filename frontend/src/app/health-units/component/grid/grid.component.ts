@@ -10,10 +10,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class GridComponent {
   @Input() healthUnits: HealthUnit[] = [];
   @Output() add = new EventEmitter();
+  @Output() edit = new EventEmitter();
 
   readonly displayedColumns = ['id', 'name', 'address', 'actions']
 
   onAdd() {
     this.add.emit(true)
+  }
+
+  onEdit(healthUnit: HealthUnit) {
+    this.edit.emit(healthUnit)
   }
 }
