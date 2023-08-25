@@ -2,17 +2,3 @@ mat-card {
     max-width: 80%;
     margin: 2em auto;
 }
-
-mat-table {
-    overflow: auto;
-    max-height: 500px;
-}
-
-.action-column {
-    flex: 0 0 150px;
-    justify-content: center;
-}
-
-.id-column {
-    flex: 0 0 100px;
-}

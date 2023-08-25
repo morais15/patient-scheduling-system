@@ -13,7 +13,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class HealthUnitsComponent {
   healthUnits$: Observable<HealthUnit[]>;
-  displayedColumns = ['id', 'name', 'address', 'actions']
 
   constructor(
     private healthUnitsService: HealthUnitsService,
