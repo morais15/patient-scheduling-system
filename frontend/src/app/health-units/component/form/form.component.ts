@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HealthUnitsService } from '../../service/health-units.service';
 import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { HealthUnit } from '../../domain/health-unit';
 
 @Component({
   selector: 'app-form',
@@ -14,13 +16,11 @@ export class FormComponent {
   constructor(
     private formBuilder: FormBuilder,
     private healthUnitsService: HealthUnitsService,
-    private location: Location
+    private location: Location,
+    private activatedRoute: ActivatedRoute
   ) {
-    this.form = this.formBuilder.group({
-      id: null,
-      name: null,
-      address: null
-    })
+    const healthUnit: HealthUnit = this.activatedRoute.snapshot.data['healthUnit'];
+    this.form = this.formBuilder.group(healthUnit)
   }
 
   onSave() {

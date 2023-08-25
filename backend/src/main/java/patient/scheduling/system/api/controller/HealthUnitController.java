@@ -31,6 +31,16 @@ public class HealthUnitController {
         return healthUnitService.findByIdOr404(id);
     }
 
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void update(@PathVariable("id") Long healthUnitId, @Valid @RequestBody HealthUnitDTO healthUnitDTO) {
+        HealthUnit healthUnit = healthUnitService.findByIdOr404(healthUnitId);
+        healthUnit.setName(healthUnitDTO.name());
+        healthUnit.setAddress(healthUnitDTO.address());
+
+        healthUnitService.save(healthUnit);
+    }
+
     @PatchMapping("/{id}/medics")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void addMedics(@PathVariable("id") Long healthUnitId, @RequestBody List<Long> medicIds) {

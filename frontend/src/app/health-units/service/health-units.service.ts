@@ -16,12 +16,31 @@ export class HealthUnitsService {
     private snackBar: MatSnackBar
   ) { }
 
-  listAll(): Observable<HealthUnit[]> {
+  findAll(): Observable<HealthUnit[]> {
     return this.httpClient.get<HealthUnit[]>(`${this.API_URL}/health-units`)
   }
 
+  findById(id: Number): Observable<HealthUnit> {
+    return this.httpClient.get<HealthUnit>(`${this.API_URL}/health-units/${id}`)
+  }
+
   save(value: HealthUnit) {
+    if (value.id)
+      this.update(value)
+    else
+      this.create(value)
+  }
+
+  private create(value: HealthUnit) {
     return this.httpClient.post<HealthUnit>(`${this.API_URL}/health-units`, value)
+      .subscribe({
+        next: res => this.onSuccess(),
+        error: err => this.onError()
+      })
+  }
+
+  private update(value: HealthUnit) {
+    return this.httpClient.put<HealthUnit>(`${this.API_URL}/health-units/${value.id}`, value)
       .subscribe({
         next: res => this.onSuccess(),
         error: err => this.onError()

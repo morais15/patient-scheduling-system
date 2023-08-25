@@ -21,7 +21,7 @@ export class HealthUnitsComponent {
     private activatedRoute: ActivatedRoute
   ) {
     this.healthUnits$ = this.healthUnitsService
-      .listAll()
+      .findAll()
       .pipe(
         catchError(err => {
           this.onError('Error on get health units.')
