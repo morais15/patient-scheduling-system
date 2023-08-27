@@ -41,6 +41,7 @@ public class HealthUnitController {
         healthUnitService.save(healthUnit);
     }
 
+
     @PatchMapping("/{id}/medics")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void addMedics(@PathVariable("id") Long healthUnitId, @RequestBody List<Long> medicIds) {
@@ -54,5 +55,11 @@ public class HealthUnitController {
         BeanUtils.copyProperties(healthUnitDTO, healthUnit);
 
         healthUnitService.save(healthUnit);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        healthUnitService.delete(id);
     }
 }

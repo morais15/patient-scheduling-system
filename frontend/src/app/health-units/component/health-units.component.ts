@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { HealthUnit } from '../domain/health-unit';
 import { HealthUnitsService } from '../service/health-units.service';
 import { Observable, catchError, of } from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
-import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -16,24 +14,21 @@ export class HealthUnitsComponent {
 
   constructor(
     private healthUnitsService: HealthUnitsService,
-    private dialog: MatDialog,
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
-    this.healthUnits$ = this.healthUnitsService
+    this.healthUnits$ = this.refresh();
+  }
+
+  private refresh(): Observable<HealthUnit[]> {
+    return this.healthUnitsService
       .findAll()
       .pipe(
-        catchError(err => {
-          this.onError('Error on get health units.')
+        catchError(() => {
+          this.healthUnitsService.onError('Error on get health units.')
           return of([])
         })
       )
-  }
-
-  onError(errorMsg: String) {
-    this.dialog.open(ErrorDialogComponent, {
-      data: errorMsg
-    })
   }
 
   onAdd() {
@@ -42,5 +37,15 @@ export class HealthUnitsComponent {
 
   onEdit(healthUnit: HealthUnit) {
     this.router.navigate(['edit', healthUnit.id], { relativeTo: this.activatedRoute })
+  }
+
+  onDelete(healthUnit: HealthUnit) {
+    this.healthUnitsService.delete(healthUnit.id)
+      .subscribe({
+        next: () => {
+          this.healthUnitsService.onSuccess("Success on delete")
+          this.healthUnits$ = this.refresh()
+        }
+      })
   }
 }

@@ -3,7 +3,9 @@ import { HealthUnit } from '../domain/health-unit';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,8 @@ export class HealthUnitsService {
 
   constructor(
     private httpClient: HttpClient,
-    private snackBar: MatSnackBar
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
   ) { }
 
   findAll(): Observable<HealthUnit[]> {
@@ -24,34 +27,32 @@ export class HealthUnitsService {
     return this.httpClient.get<HealthUnit>(`${this.API_URL}/health-units/${id}`)
   }
 
-  save(value: HealthUnit) {
+  save(value: HealthUnit): Observable<Object> {
     if (value.id)
-      this.update(value)
-    else
-      this.create(value)
+      return this.update(value)
+    return this.create(value)
   }
 
-  private create(value: HealthUnit) {
-    return this.httpClient.post<HealthUnit>(`${this.API_URL}/health-units`, value)
-      .subscribe({
-        next: res => this.onSuccess(),
-        error: err => this.onError()
-      })
+  private create(value: HealthUnit): Observable<Object> {
+    return this.httpClient.post(`${this.API_URL}/health-units`, value)
   }
 
-  private update(value: HealthUnit) {
-    return this.httpClient.put<HealthUnit>(`${this.API_URL}/health-units/${value.id}`, value)
-      .subscribe({
-        next: res => this.onSuccess(),
-        error: err => this.onError()
-      })
+  private update(value: HealthUnit): Observable<Object> {
+    return this.httpClient.put(`${this.API_URL}/health-units/${value.id}`, value)
   }
 
-  onSuccess() {
-    this.snackBar.open("Saved successfully", "Close", { duration: 5000 })
+  delete(id: Number): Observable<Object> {
+    return this.httpClient.delete(`${this.API_URL}/health-units/${id}`)
+
   }
 
-  onError() {
-    this.snackBar.open("Error on save", "Close", { duration: 5000 })
+  public onError(errorMsg: String) {
+    this.dialog.open(ErrorDialogComponent, {
+      data: errorMsg
+    })
+  }
+
+  public onSuccess(msg: string) {
+    this.snackBar.open(msg, "Close", { duration: 5000 })
   }
 }

@@ -25,7 +25,12 @@ export class FormComponent {
 
   onSave() {
     this.healthUnitsService.save(this.form.value)
-    this.location.back()
+    .subscribe({
+      next: ()=> {
+        this.healthUnitsService.onSuccess("Success on save")
+        this.location.back()
+      } 
+    })
   }
 
   onCancel() {

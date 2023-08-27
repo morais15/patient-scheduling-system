@@ -6,9 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import patient.scheduling.system.api.domain.entity.HealthUnit;
-import patient.scheduling.system.api.domain.entity.Medic;
 import patient.scheduling.system.api.repository.HealthUnitRepository;
-import patient.scheduling.system.api.repository.MedicRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -49,5 +47,10 @@ public class HealthUnitService {
     @Transactional
     public void save(HealthUnit healthUnit) {
         healthUnitRepository.save(healthUnit);
+    }
+
+    public void delete(Long id) {
+        var healthUnit = findByIdOr404(id);
+        healthUnitRepository.delete(healthUnit);
     }
 }
