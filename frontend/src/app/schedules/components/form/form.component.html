@@ -1,0 +1,30 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Create Schedule</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <mat-form [formGroup]="form">
+      <mat-form-field>
+        <mat-label>Id</mat-label>
+        <input matInput formControlName="id" readonly>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Date Time</mat-label>
+        <input matInput formControlName="dateTime">
+        <mat-error *ngIf="form.get('dateTime')?.invalid">{{getErrorMessage('dateTime')}}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Status</mat-label>
+        <input matInput formControlName="status">
+        <mat-error *ngIf="form.get('status')?.invalid">{{getErrorMessage('status')}}</mat-error>
+      </mat-form-field>
+    </mat-form>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="onSave()">Save</button>
+    <button mat-raised-button (click)="onCancel()">Cancel</button>
+  </mat-card-actions>
+</mat-card>

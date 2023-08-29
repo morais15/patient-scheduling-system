@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import patient.scheduling.system.api.domain.dto.MedicDTO;
 import patient.scheduling.system.api.domain.dto.ScheduleDTO;
 import patient.scheduling.system.api.domain.entity.Schedule;
 import patient.scheduling.system.api.service.ScheduleService;
@@ -37,6 +38,16 @@ public class ScheduleController {
         return scheduleService.findByMedicId(id);
     }
 
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void update(@PathVariable("id") Long scheduleId, @Valid @RequestBody ScheduleDTO scheduleDTO) {
+        var schedule = scheduleService.findByIdOr404(scheduleId);
+        schedule.setDateTime(scheduleDTO.dateTime());
+        schedule.setStatus(scheduleDTO.status());
+
+        scheduleService.save(schedule);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void save(@Valid @RequestBody ScheduleDTO scheduleDTO) {
@@ -45,4 +56,11 @@ public class ScheduleController {
 
         scheduleService.save(schedule);
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        scheduleService.delete(id);
+    }
+
 }

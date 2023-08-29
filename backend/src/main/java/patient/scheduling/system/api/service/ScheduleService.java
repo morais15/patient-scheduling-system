@@ -37,4 +37,9 @@ public class ScheduleService {
     public Schedule save(Schedule schedule) {
         return scheduleRepository.save(schedule);
     }
+
+    public void delete(Long id){
+        var schedule = findByIdOr404(id);
+        scheduleRepository.delete(schedule);
+    }
 }
