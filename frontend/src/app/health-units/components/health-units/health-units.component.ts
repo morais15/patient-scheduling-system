@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { HealthUnit } from '../domain/health-unit';
-import { HealthUnitsService } from '../service/health-units.service';
+import { HealthUnit } from '../../domain/health-unit';
+import { HealthUnitsService } from '../../service/health-units.service';
 import { Observable, catchError, of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -43,15 +43,19 @@ export class HealthUnitsComponent {
     this.healthUnitsService.confirm("Do you want to delete the item?")
       .subscribe((confirm: Boolean) => {
         if (confirm) {
-          this.healthUnitsService.delete(healthUnit.id)
-            .subscribe({
-              next: () => {
-                this.healthUnitsService.onSuccess("Success on delete")
-                this.healthUnits$ = this.refresh()
-              },
-              error: () => this.healthUnitsService.onError('Error on delete health unit.')
-            })
+          this.delete(healthUnit)
         }
+      })
+  }
+
+  private delete(healthUnit: HealthUnit) {
+    this.healthUnitsService.delete(healthUnit.id)
+      .subscribe({
+        next: () => {
+          this.healthUnitsService.onSuccess("Success on delete")
+          this.healthUnits$ = this.refresh()
+        },
+        error: () => this.healthUnitsService.onError('Error on delete health unit.')
       })
   }
 }

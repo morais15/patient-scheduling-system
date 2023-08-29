@@ -1,0 +1,12 @@
+<mat-card>
+  <mat-card-content>
+    <mat-toolbar color="secondary">Medics</mat-toolbar>
+
+    <app-grid *ngIf="medics$ | async as medics; else loading" [medics]="medics" (add)="onAdd()" (edit)="onEdit($event)"
+      (delete)="onDelete($event)"></app-grid>
+  </mat-card-content>
+</mat-card>
+
+<ng-template #loading>
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</ng-template>

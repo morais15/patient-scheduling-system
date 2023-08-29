@@ -34,7 +34,7 @@ public class HealthUnitController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void update(@PathVariable("id") Long healthUnitId, @Valid @RequestBody HealthUnitDTO healthUnitDTO) {
-        HealthUnit healthUnit = healthUnitService.findByIdOr404(healthUnitId);
+        var healthUnit = healthUnitService.findByIdOr404(healthUnitId);
         healthUnit.setName(healthUnitDTO.name());
         healthUnit.setAddress(healthUnitDTO.address());
 

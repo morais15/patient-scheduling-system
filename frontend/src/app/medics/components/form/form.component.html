@@ -1,0 +1,30 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Create Medic</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <mat-form [formGroup]="form">
+      <mat-form-field>
+        <mat-label>Id</mat-label>
+        <input matInput formControlName="id" readonly>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name">
+        <mat-error *ngIf="form.get('name')?.invalid">{{getErrorMessage('name')}}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Specialty</mat-label>
+        <input matInput formControlName="specialty">
+        <mat-error *ngIf="form.get('specialty')?.invalid">{{getErrorMessage('specialty')}}</mat-error>
+      </mat-form-field>
+    </mat-form>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="onSave()">Save</button>
+    <button mat-raised-button (click)="onCancel()">Cancel</button>
+  </mat-card-actions>
+</mat-card>

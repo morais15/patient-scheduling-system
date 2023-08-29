@@ -1,0 +1,42 @@
+<mat-table [dataSource]="medics" class="mat-elevation-z8">
+
+  <!-- Id Column -->
+  <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef class="id-column"> Id </mat-header-cell>
+      <mat-cell *matCellDef="let element" class="id-column"> {{element.id}} </mat-cell>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+  </ng-container>
+
+  <!-- Specialty Column -->
+  <ng-container matColumnDef="specialty">
+      <mat-header-cell *matHeaderCellDef> Specialty </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.specialty}} </mat-cell>
+  </ng-container>
+
+  <!-- Actions Column -->
+  <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef class="action-column">
+          <button mat-mini-fab color="primary" (click)="onAdd()">
+              <mat-icon>add</mat-icon>
+          </button>
+      </mat-header-cell>
+
+      <mat-cell *matCellDef="let element" class="action-column">
+          <button mat-icon-button (click)="onEdit(element)">
+              <mat-icon>edit</mat-icon>
+          </button>
+
+          <button mat-icon-button (click)="onDelete(element)">
+              <mat-icon>delete</mat-icon>
+          </button>
+      </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>

@@ -84,4 +84,9 @@ public class MedicService {
     public void save(Medic medic) {
         medicRepository.save(medic);
     }
+
+    public void delete(Long id) {
+        var medic = findByIdOr404(id);
+        medicRepository.delete(medic);
+    }
 }

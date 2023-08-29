@@ -6,11 +6,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import patient.scheduling.system.api.domain.dto.CreateSchedulesDTO;
 import patient.scheduling.system.api.domain.dto.MedicDTO;
 import patient.scheduling.system.api.domain.dto.ScheduleDTO;
 import patient.scheduling.system.api.domain.entity.Medic;
 import patient.scheduling.system.api.domain.entity.Schedule;
-import patient.scheduling.system.api.domain.dto.CreateSchedulesDTO;
 import patient.scheduling.system.api.service.MedicService;
 
 import java.util.List;
@@ -38,6 +38,16 @@ public class MedicController {
     @ResponseStatus(HttpStatus.OK)
     public List<Medic> findByHealthUnitId(@PathVariable Long id) {
         return medicService.findByHealthUnitId(id);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void update(@PathVariable("id") Long medicId, @Valid @RequestBody MedicDTO medicDTO) {
+        var medic = medicService.findByIdOr404(medicId);
+        medic.setName(medicDTO.name());
+        medic.setSpecialty(medicDTO.specialty());
+        
+        medicService.save(medic);
     }
 
     @PatchMapping("/{id}/schedules")
@@ -78,5 +88,11 @@ public class MedicController {
         BeanUtils.copyProperties(medicDTO, medic);
 
         medicService.save(medic);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        medicService.delete(id);
     }
 }

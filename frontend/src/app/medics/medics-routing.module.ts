@@ -1,23 +1,23 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HealthUnitsComponent } from './components/health-units/health-units.component';
+import { MedicsComponent } from './components/medics/medics.component';
+import { medicResolver } from './guard/medic.resolver';
 import { FormComponent } from './components/form/form.component';
-import { healthUnitResolver } from './guard/health-unit.resolver';
 
 const routes: Routes = [
   {
     path: '',
-    component: HealthUnitsComponent
+    component: MedicsComponent
   },
   {
     path: 'new',
     component: FormComponent,
-    resolve: {healthUnit: healthUnitResolver}
+    resolve: { medic: medicResolver }
   },
   {
     path: 'edit/:id',
     component: FormComponent,
-    resolve: {healthUnit: healthUnitResolver}
+    resolve: { medic: medicResolver }
   }
 ];
 
@@ -25,4 +25,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class HealthUnitsRoutingModule { }
+export class MedicsRoutingModule { }
