@@ -40,11 +40,17 @@ export class HealthUnitsComponent {
   }
 
   onDelete(healthUnit: HealthUnit) {
-    this.healthUnitsService.delete(healthUnit.id)
-      .subscribe({
-        next: () => {
-          this.healthUnitsService.onSuccess("Success on delete")
-          this.healthUnits$ = this.refresh()
+    this.healthUnitsService.confirm("Do you want to delete the item?")
+      .subscribe((confirm: Boolean) => {
+        if (confirm) {
+          this.healthUnitsService.delete(healthUnit.id)
+            .subscribe({
+              next: () => {
+                this.healthUnitsService.onSuccess("Success on delete")
+                this.healthUnits$ = this.refresh()
+              },
+              error: () => this.healthUnitsService.onError('Error on delete health unit.')
+            })
         }
       })
   }

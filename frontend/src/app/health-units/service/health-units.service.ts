@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment.development';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
+import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 
 @Injectable({
   providedIn: 'root'
@@ -54,5 +55,13 @@ export class HealthUnitsService {
 
   public onSuccess(msg: string) {
     this.snackBar.open(msg, "Close", { duration: 5000 })
+  }
+
+  public confirm(msg: String): Observable<Boolean> {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: msg,
+    });
+
+    return dialogRef.afterClosed();
   }
 }
