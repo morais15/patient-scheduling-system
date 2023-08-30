@@ -12,7 +12,7 @@
 
       <mat-form-field>
         <mat-label>Date Time</mat-label>
-        <input matInput formControlName="dateTime">
+        <input matInput formControlName="dateTime" placeholder="dd/MM/yyyy HH:mm">
         <mat-error *ngIf="form.get('dateTime')?.invalid">{{getErrorMessage('dateTime')}}</mat-error>
       </mat-form-field>
 

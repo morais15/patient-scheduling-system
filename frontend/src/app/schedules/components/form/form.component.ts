@@ -22,7 +22,7 @@ export class FormComponent {
     const schedule: Schedule = this.activatedRoute.snapshot.data['schedule'];
     this.form = this.formBuilder.group({
       id: schedule.id,
-      dateTime: [schedule.dateTime, [Validators.required, Validators.minLength(10), Validators.maxLength(50)]],
+      dateTime: [schedule.dateTime, [Validators.required, Validators.pattern(/^\d{2}\/\d{2}\/\d{4} \d{2}\:\d{2}$/)]],
       status: [schedule.status, [Validators.required, Validators.minLength(2), Validators.maxLength(20)]]
     })
   }
