@@ -12,6 +12,7 @@ import { Schedule } from '../../domain/Schedule';
 })
 export class FormComponent {
   protected form: FormGroup;
+  protected statusList: String[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -25,6 +26,12 @@ export class FormComponent {
       dateTime: [schedule.dateTime, [Validators.required, Validators.pattern(/^\d{2}\/\d{2}\/\d{4} \d{2}\:\d{2}$/)]],
       status: [schedule.status, [Validators.required, Validators.minLength(2), Validators.maxLength(20)]]
     })
+
+    this.schedulesService.findStatus()
+      .subscribe({
+        next: value => this.statusList = value,
+        error: () => this.schedulesService.onError("Error on get status list")
+      })
   }
 
   onSave() {
@@ -34,7 +41,7 @@ export class FormComponent {
           this.schedulesService.onSuccess("Success on save")
           this.location.back()
         },
-        error: () => this.schedulesService.onError("Error on save.")
+        error: () => this.schedulesService.onError("Error on save")
       })
   }
 

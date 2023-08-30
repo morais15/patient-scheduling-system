@@ -25,6 +25,10 @@ export class SchedulesService {
     return this.httpClient.get<Schedule[]>(`${this.API_URL}/schedules`)
   }
 
+  findStatus(): Observable<String[]> {
+    return this.httpClient.get<String[]>(`${this.API_URL}/schedules/status`)
+  }
+
   findById(id: Number): Observable<Schedule> {
     return this.httpClient.get<Schedule>(`${this.API_URL}/schedules/${id}`)
   }

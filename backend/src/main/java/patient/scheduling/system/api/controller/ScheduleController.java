@@ -6,9 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import patient.scheduling.system.api.domain.dto.MedicDTO;
 import patient.scheduling.system.api.domain.dto.ScheduleDTO;
 import patient.scheduling.system.api.domain.entity.Schedule;
+import patient.scheduling.system.api.domain.enums.StatusENUM;
 import patient.scheduling.system.api.service.ScheduleService;
 
 import java.util.List;
@@ -24,6 +24,12 @@ public class ScheduleController {
     @ResponseStatus(HttpStatus.OK)
     public List<Schedule> findAll() {
         return scheduleService.findAll();
+    }
+
+    @GetMapping("/status")
+    @ResponseStatus(HttpStatus.OK)
+    public StatusENUM[] findStatus() {
+        return StatusENUM.values();
     }
 
     @GetMapping("/{id}")
