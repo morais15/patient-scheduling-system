@@ -4,9 +4,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
-import { Medic } from '../domain/medic';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
+import { Medic } from '../domain/Medic';
+import { GenerateSchedules } from '../domain/GenerateSchedules';
 
 @Injectable({
   providedIn: 'root'
@@ -46,6 +47,10 @@ export class MedicsService {
   delete(id: Number): Observable<Object> {
     return this.httpClient.delete(`${this.API_URL}/medics/${id}`)
 
+  }
+
+  generateSchedules(medicId: Number, value: GenerateSchedules): Observable<Object> {
+    return this.httpClient.post(`${this.API_URL}/medics/${medicId}/create-schedules`, value)
   }
 
   public onError(errorMsg: String) {

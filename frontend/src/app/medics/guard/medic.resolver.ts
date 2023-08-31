@@ -1,7 +1,7 @@
 import { ResolveFn } from '@angular/router';
 import { MedicsService } from '../service/medics.service';
 import { inject } from '@angular/core';
-import { Medic } from '../domain/medic';
+import { Medic } from '../domain/Medic';
 import { of } from 'rxjs';
 
 export const medicResolver: ResolveFn<Medic> = (route, state, service: MedicsService = inject(MedicsService)) => {

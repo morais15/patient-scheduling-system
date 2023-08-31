@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MedicsService } from '../../service/medics.service';
 import { ActivatedRoute } from '@angular/router';
-import { Medic } from '../../domain/medic';
+import { Medic } from '../../domain/Medic';
 import { Location } from '@angular/common';
 
 @Component({

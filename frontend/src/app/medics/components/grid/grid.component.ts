@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Medic } from '../../domain/medic';
+import { Medic } from '../../domain/Medic';
 
 @Component({
   selector: 'app-grid',
@@ -11,6 +11,7 @@ export class GridComponent {
   @Output() add = new EventEmitter();
   @Output() edit = new EventEmitter();
   @Output() delete = new EventEmitter();
+  @Output() generate = new EventEmitter();
 
   readonly displayedColumns = ['id', 'name', 'specialty', 'actions']
 
@@ -22,7 +23,11 @@ export class GridComponent {
     this.edit.emit(medic)
   }
 
-  onDelete(medic: Medic){
+  onDelete(medic: Medic) {
     this.delete.emit(medic)
+  }
+
+  onGenerate(medic: Medic) {
+    this.generate.emit(medic)
   }
 }

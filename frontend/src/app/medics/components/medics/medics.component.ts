@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { Medic } from '../../domain/medic';
 import { Observable, catchError, of } from 'rxjs';
 import { MedicsService } from '../../service/medics.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Medic } from '../../domain/Medic';
 
 @Component({
   selector: 'app-medics',
@@ -37,6 +37,10 @@ export class MedicsComponent {
 
   onEdit(medic: Medic) {
     this.router.navigate(['edit', medic.id], { relativeTo: this.activatedRoute })
+  }
+
+  onGenerate(medic: Medic) {
+    this.router.navigate(['generate', medic.id], { relativeTo: this.activatedRoute })
   }
 
   onDelete(medic: Medic) {
