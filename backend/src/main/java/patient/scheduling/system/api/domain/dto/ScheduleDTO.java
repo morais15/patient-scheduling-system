@@ -11,5 +11,7 @@ public record ScheduleDTO(
         @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
         LocalDateTime dateTime,
         @NotNull
-        StatusENUM status) {
+        StatusENUM status,
+        @NotNull
+        Long medicId) {
 }

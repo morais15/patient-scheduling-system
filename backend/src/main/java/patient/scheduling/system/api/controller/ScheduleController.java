@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import patient.scheduling.system.api.domain.dto.ScheduleDTO;
 import patient.scheduling.system.api.domain.entity.Schedule;
 import patient.scheduling.system.api.domain.enums.StatusENUM;
+import patient.scheduling.system.api.service.MedicService;
 import patient.scheduling.system.api.service.ScheduleService;
 
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.List;
 @RequestMapping("/schedules")
 public class ScheduleController {
     private final ScheduleService scheduleService;
+    private final MedicService medicService;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -48,6 +50,9 @@ public class ScheduleController {
     @ResponseStatus(HttpStatus.OK)
     public void update(@PathVariable("id") Long scheduleId, @Valid @RequestBody ScheduleDTO scheduleDTO) {
         var schedule = scheduleService.findByIdOr404(scheduleId);
+        var medic = medicService.findByIdOr404(scheduleDTO.medicId());
+
+        schedule.setMedic(medic);
         schedule.setDateTime(scheduleDTO.dateTime());
         schedule.setStatus(scheduleDTO.status());
 
@@ -57,7 +62,10 @@ public class ScheduleController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void save(@Valid @RequestBody ScheduleDTO scheduleDTO) {
+        var medic = medicService.findByIdOr404(scheduleDTO.medicId());
+
         var schedule = new Schedule();
+        schedule.setMedic(medic);
         BeanUtils.copyProperties(scheduleDTO, schedule);
 
         scheduleService.save(schedule);

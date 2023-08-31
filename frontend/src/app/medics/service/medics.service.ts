@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
-import { Medic } from '../domain/Medic';
-import { GenerateSchedules } from '../domain/GenerateSchedules';
+import { Medic } from '../domain/medic';
+import { GenerateSchedules } from '../domain/generate-schedules';
 
 @Injectable({
   providedIn: 'root'

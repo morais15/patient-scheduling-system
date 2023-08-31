@@ -2,8 +2,10 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MedicsService } from '../../service/medics.service';
 import { ActivatedRoute } from '@angular/router';
-import { Medic } from '../../domain/Medic';
+import { Medic } from '../../domain/medic';
 import { Location } from '@angular/common';
+import { HealthUnit } from 'src/app/health-units/domain/health-unit';
+import { HealthUnitsService } from '../../../health-units/service/health-units.service';
 
 @Component({
   selector: 'app-form',
@@ -12,19 +14,28 @@ import { Location } from '@angular/common';
 })
 export class FormComponent {
   protected form: FormGroup;
+  protected healthUnits: HealthUnit[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private medicsService: MedicsService,
+    private healthUnitsService: HealthUnitsService,
     private location: Location,
     private activatedRoute: ActivatedRoute
   ) {
     const medic: Medic = this.activatedRoute.snapshot.data['medic'];
     this.form = this.formBuilder.group({
       id: medic.id,
+      healthUnitId: medic.healthUnit?.id,
       name: [medic.name, [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
       specialty: [medic.specialty, [Validators.required, Validators.minLength(5), Validators.maxLength(50)]]
     })
+
+    this.healthUnitsService.findAll()
+      .subscribe({
+        next: value => this.healthUnits = value,
+        error: () => this.healthUnitsService.onError("Error on get health units")
+      })
   }
 
   onSave() {

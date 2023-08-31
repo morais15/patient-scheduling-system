@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Medic } from '../../domain/Medic';
+import { Medic } from '../../domain/medic';
 
 @Component({
   selector: 'app-grid',

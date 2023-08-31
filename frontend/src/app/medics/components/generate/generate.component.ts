@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 import { SchedulesService } from 'src/app/schedules/service/schedules.service';
-import { Medic } from '../../domain/Medic';
+import { Medic } from '../../domain/medic';
 import { ActivatedRoute } from '@angular/router';
 import { MedicsService } from '../../service/medics.service';
-import { GenerateSchedules } from '../../domain/GenerateSchedules';
+import { GenerateSchedules } from '../../domain/generate-schedules';
 
 @Component({
   selector: 'app-generate',

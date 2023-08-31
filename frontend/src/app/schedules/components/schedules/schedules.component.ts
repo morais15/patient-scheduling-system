@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Schedule } from '../../domain/Schedule';
+import { Schedule } from '../../domain/schedule';
 import { Observable, catchError, of } from 'rxjs';
 import { SchedulesService } from '../../service/schedules.service';
 import { ActivatedRoute, Router } from '@angular/router';

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Observable, catchError, of } from 'rxjs';
 import { MedicsService } from '../../service/medics.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Medic } from '../../domain/Medic';
+import { Medic } from '../../domain/medic';
 
 @Component({
   selector: 'app-medics',

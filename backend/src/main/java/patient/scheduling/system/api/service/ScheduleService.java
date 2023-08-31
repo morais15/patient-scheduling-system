@@ -8,6 +8,7 @@ import org.springframework.web.server.ResponseStatusException;
 import patient.scheduling.system.api.domain.entity.Schedule;
 import patient.scheduling.system.api.repository.ScheduleRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +25,10 @@ public class ScheduleService {
         return scheduleRepository.findById(id);
     }
 
+    public Optional<Schedule> findByMedicIdAndDateTime(Long medicId, LocalDateTime dateTime) {
+        return scheduleRepository.findFirstByMedic_idAndDateTime(medicId, dateTime);
+    }
+
     public Schedule findByIdOr404(Long id) {
         return findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Schedule not found"));
@@ -35,10 +40,16 @@ public class ScheduleService {
 
     @Transactional
     public Schedule save(Schedule schedule) {
+        var saved = findByMedicIdAndDateTime(schedule.getMedic().getId(), schedule.getDateTime());
+        if (saved.isPresent()) {
+            saved.get().setStatus(schedule.getStatus());
+            return scheduleRepository.save(saved.get());
+        }
+
         return scheduleRepository.save(schedule);
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         var schedule = findByIdOr404(id);
         scheduleRepository.delete(schedule);
     }

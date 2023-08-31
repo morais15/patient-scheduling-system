@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Schedule } from '../../domain/Schedule';
+import { Schedule } from '../../domain/schedule';
 
 @Component({
   selector: 'app-grid',

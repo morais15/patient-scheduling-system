@@ -11,6 +11,7 @@ import patient.scheduling.system.api.domain.dto.MedicDTO;
 import patient.scheduling.system.api.domain.dto.ScheduleDTO;
 import patient.scheduling.system.api.domain.entity.Medic;
 import patient.scheduling.system.api.domain.entity.Schedule;
+import patient.scheduling.system.api.service.HealthUnitService;
 import patient.scheduling.system.api.service.MedicService;
 
 import java.util.List;
@@ -21,6 +22,7 @@ import java.util.List;
 @RequestMapping("/medics")
 public class MedicController {
     private final MedicService medicService;
+    private final HealthUnitService healthUnitService;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -44,9 +46,12 @@ public class MedicController {
     @ResponseStatus(HttpStatus.OK)
     public void update(@PathVariable("id") Long medicId, @Valid @RequestBody MedicDTO medicDTO) {
         var medic = medicService.findByIdOr404(medicId);
+        var healthUnit = healthUnitService.findByIdOr404(medicDTO.healthUnitId());
+
+        medic.setHealthUnit(healthUnit);
         medic.setName(medicDTO.name());
         medic.setSpecialty(medicDTO.specialty());
-        
+
         medicService.save(medic);
     }
 
@@ -84,7 +89,10 @@ public class MedicController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void save(@Valid @RequestBody MedicDTO medicDTO) {
+        var healthUnit = healthUnitService.findByIdOr404(medicDTO.healthUnitId());
+
         var medic = new Medic();
+        medic.setHealthUnit(healthUnit);
         BeanUtils.copyProperties(medicDTO, medic);
 
         medicService.save(medic);

@@ -11,6 +11,14 @@
       </mat-form-field>
 
       <mat-form-field>
+        <mat-label>Health Unit</mat-label>
+        <mat-select formControlName="healthUnitId">
+          <mat-option *ngFor="let hu of healthUnits" [value]="hu.id">{{ hu.name }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('status')?.invalid">{{getErrorMessage('status')}}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
         <mat-label>Name</mat-label>
         <input matInput formControlName="name">
         <mat-error *ngIf="form.get('name')?.invalid">{{getErrorMessage('name')}}</mat-error>

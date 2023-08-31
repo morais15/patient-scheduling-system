@@ -11,6 +11,14 @@
       </mat-form-field>
 
       <mat-form-field>
+        <mat-label>Medic</mat-label>
+        <mat-select formControlName="medicId">
+          <mat-option *ngFor="let medic of medics" [value]="medic.id">{{ medic.name }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('status')?.invalid">{{getErrorMessage('status')}}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
         <mat-label>Date Time</mat-label>
         <input matInput formControlName="dateTime" placeholder="dd/MM/yyyy HH:mm">
         <mat-error *ngIf="form.get('dateTime')?.invalid">{{getErrorMessage('dateTime')}}</mat-error>
