@@ -39,6 +39,10 @@ export class HealthUnitsComponent {
     this.router.navigate(['edit', healthUnit.id], { relativeTo: this.activatedRoute })
   }
 
+  onEnter(healthUnit: HealthUnit) {
+    this.router.navigate(['medics', 'filter', healthUnit.id])
+  }
+
   onDelete(healthUnit: HealthUnit) {
     this.healthUnitsService.confirm("Do you want to delete the item?")
       .subscribe((confirm: Boolean) => {

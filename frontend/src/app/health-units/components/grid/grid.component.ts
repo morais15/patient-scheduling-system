@@ -11,6 +11,7 @@ export class GridComponent {
   @Output() add = new EventEmitter();
   @Output() edit = new EventEmitter();
   @Output() delete = new EventEmitter();
+  @Output() enter = new EventEmitter();
 
   readonly displayedColumns = ['id', 'name', 'address', 'actions']
 
@@ -22,7 +23,11 @@ export class GridComponent {
     this.edit.emit(healthUnit)
   }
 
-  onDelete(healthUnit: HealthUnit){
+  onDelete(healthUnit: HealthUnit) {
     this.delete.emit(healthUnit)
+  }
+
+  onEnter(healthUnit: HealthUnit) {
+    this.enter.emit(healthUnit)
   }
 }

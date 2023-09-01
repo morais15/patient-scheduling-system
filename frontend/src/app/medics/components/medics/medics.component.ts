@@ -10,37 +10,30 @@ import { Medic } from '../../domain/medic';
   styleUrls: ['./medics.component.scss']
 })
 export class MedicsComponent {
-  medics$: Observable<Medic[]>;
+  medics: Medic[];
 
   constructor(
     private medicsService: MedicsService,
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
-    this.medics$ = this.refresh();
-  }
-
-  private refresh(): Observable<Medic[]> {
-    return this.medicsService
-      .findAll()
-      .pipe(
-        catchError(() => {
-          this.medicsService.onError('Error on get medics.')
-          return of([])
-        })
-      )
+    this.medics = this.activatedRoute.snapshot.data['medics'];
   }
 
   onAdd() {
-    this.router.navigate(['new'], { relativeTo: this.activatedRoute })
+    this.router.navigate(['medics', 'new'])
   }
 
   onEdit(medic: Medic) {
-    this.router.navigate(['edit', medic.id], { relativeTo: this.activatedRoute })
+    this.router.navigate(['medics', 'edit', medic.id])
   }
 
   onGenerate(medic: Medic) {
-    this.router.navigate(['generate', medic.id], { relativeTo: this.activatedRoute })
+    this.router.navigate(['medics', 'generate', medic.id])
+  }
+
+  onEnter(medic: Medic) {
+    this.router.navigate(['schedules', 'filter', medic.id])
   }
 
   onDelete(medic: Medic) {
@@ -57,7 +50,7 @@ export class MedicsComponent {
       .subscribe({
         next: () => {
           this.medicsService.onSuccess("Success on delete")
-          this.medics$ = this.refresh()
+          //this.medics$ = this.refresh()
         },
         error: () => this.medicsService.onError('Error on delete medic.')
       })

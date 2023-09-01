@@ -3,7 +3,7 @@
     <mat-toolbar color="secondary">Health Units</mat-toolbar>
 
     <app-grid *ngIf="healthUnits$ | async as healthUnits; else loading" [healthUnits]="healthUnits" (add)="onAdd()"
-      (edit)="onEdit($event)" (delete)="onDelete($event)"></app-grid>
+      (edit)="onEdit($event)" (delete)="onDelete($event)" (enter)="onEnter($event)"></app-grid>
   </mat-card-content>
 </mat-card>
 

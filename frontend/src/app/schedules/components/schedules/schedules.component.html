@@ -2,7 +2,7 @@
   <mat-card-content>
     <mat-toolbar color="secondary">Schedules</mat-toolbar>
 
-    <app-grid *ngIf="schedules$ | async as schedules; else loading" [schedules]="schedules" (add)="onAdd()" (edit)="onEdit($event)"
+    <app-grid *ngIf="schedules; else loading" [schedules]="schedules" (add)="onAdd()" (edit)="onEdit($event)"
       (delete)="onDelete($event)"></app-grid>
   </mat-card-content>
 </mat-card>

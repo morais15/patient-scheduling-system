@@ -12,6 +12,7 @@ export class GridComponent {
   @Output() edit = new EventEmitter();
   @Output() delete = new EventEmitter();
   @Output() generate = new EventEmitter();
+  @Output() enter = new EventEmitter();
 
   readonly displayedColumns = ['id', 'name', 'specialty', 'actions']
 
@@ -29,5 +30,9 @@ export class GridComponent {
 
   onGenerate(medic: Medic) {
     this.generate.emit(medic)
+  }
+
+  onEnter(medic: Medic) {
+    this.enter.emit(medic)
   }
 }

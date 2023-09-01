@@ -21,22 +21,26 @@
   <!-- Actions Column -->
   <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef class="action-column">
-          <button mat-mini-fab color="primary" (click)="onAdd()">
+          <button matTooltip="Add" matTooltipPosition="above" mat-mini-fab color="primary" (click)="onAdd()">
               <mat-icon>add</mat-icon>
           </button>
       </mat-header-cell>
 
       <mat-cell *matCellDef="let element" class="action-column">
-          <button mat-icon-button (click)="onEdit(element)">
+          <button mat-icon-button matTooltip="Edit" (click)="onEdit(element)">
               <mat-icon>edit</mat-icon>
           </button>
 
-          <button mat-icon-button (click)="onDelete(element)">
+          <button mat-icon-button matTooltip="Delete" (click)="onDelete(element)">
               <mat-icon>delete</mat-icon>
           </button>
 
-          <button mat-icon-button (click)="onGenerate(element)">
+          <button mat-icon-button matTooltip="Generate Schedules" (click)="onGenerate(element)">
             <mat-icon>date_range</mat-icon>
+        </button>
+
+        <button mat-icon-button matTooltip="Schedules" (click)="onEnter(element)">
+          <mat-icon>input</mat-icon>
         </button>
       </mat-cell>
   </ng-container>

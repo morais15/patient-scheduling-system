@@ -2,8 +2,8 @@
   <mat-card-content>
     <mat-toolbar color="secondary">Medics</mat-toolbar>
 
-    <app-grid *ngIf="medics$ | async as medics; else loading" [medics]="medics" (add)="onAdd()" (edit)="onEdit($event)"
-      (delete)="onDelete($event)" (generate)="onGenerate($event)"></app-grid>
+    <app-grid *ngIf="medics; else loading" [medics]="medics" (add)="onAdd()" (edit)="onEdit($event)"
+      (delete)="onDelete($event)" (generate)="onGenerate($event)" (enter)="onEnter($event)"></app-grid>
   </mat-card-content>
 </mat-card>
 

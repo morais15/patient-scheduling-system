@@ -33,6 +33,10 @@ export class SchedulesService {
     return this.httpClient.get<Schedule>(`${this.API_URL}/schedules/${id}`)
   }
 
+  findByMedic(id: Number): Observable<Schedule[]> {
+    return this.httpClient.get<Schedule[]>(`${this.API_URL}/schedules/medic/${id}`)
+  }
+
   save(value: Schedule): Observable<Object> {
     if (value.id)
       return this.update(value)

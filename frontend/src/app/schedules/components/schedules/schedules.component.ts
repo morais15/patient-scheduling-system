@@ -10,33 +10,22 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./schedules.component.scss']
 })
 export class SchedulesComponent {
-  schedules$: Observable<Schedule[]>;
+  schedules: Schedule[];
 
   constructor(
     private schedulesService: SchedulesService,
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
-    this.schedules$ = this.refresh();
-  }
-
-  private refresh(): Observable<Schedule[]> {
-    return this.schedulesService
-      .findAll()
-      .pipe(
-        catchError(() => {
-          this.schedulesService.onError('Error on get schedules.')
-          return of([])
-        })
-      )
+    this.schedules = this.activatedRoute.snapshot.data['schedules'];
   }
 
   onAdd() {
-    this.router.navigate(['new'], { relativeTo: this.activatedRoute })
+    this.router.navigate(['schedules', 'new'])
   }
 
   onEdit(schedule: Schedule) {
-    this.router.navigate(['edit', schedule.id], { relativeTo: this.activatedRoute })
+    this.router.navigate(['schedules', 'edit', schedule.id])
   }
 
   onDelete(schedule: Schedule) {
@@ -52,8 +41,8 @@ export class SchedulesComponent {
     this.schedulesService.delete(schedule.id)
       .subscribe({
         next: () => {
-          this.schedulesService.onSuccess("Success on delete")
-          this.schedules$ = this.refresh()
+          this.schedulesService.onSuccess("Success on delete");
+          //this.schedules = this.refresh();
         },
         error: () => this.schedulesService.onError('Error on delete schedule.')
       })

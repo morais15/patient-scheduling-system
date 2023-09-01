@@ -30,6 +30,10 @@ export class MedicsService {
     return this.httpClient.get<Medic>(`${this.API_URL}/medics/${id}`)
   }
 
+  findByHealthUnitId(id: Number): Observable<Medic[]> {
+    return this.httpClient.get<Medic[]>(`${this.API_URL}/medics/health-unit/${id}`)
+  }
+
   save(value: Medic): Observable<Object> {
     if (value.id)
       return this.update(value)
