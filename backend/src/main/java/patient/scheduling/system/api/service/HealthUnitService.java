@@ -13,21 +13,36 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class HealthUnitService {
+public class HealthUnitService implements BaseService<HealthUnit> {
     private final HealthUnitRepository healthUnitRepository;
     private final MedicService medicService;
 
+    @Override
     public List<HealthUnit> findAll() {
         return healthUnitRepository.findAll();
     }
 
-    protected Optional<HealthUnit> findById(Long id) {
+    @Override
+    public Optional<HealthUnit> findById(Long id) {
         return healthUnitRepository.findById(id);
     }
 
+    @Override
     public HealthUnit findByIdOr404(Long id) {
         return findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Health unit not found."));
+    }
+
+    @Override
+    @Transactional
+    public HealthUnit save(HealthUnit healthUnit) {
+        return healthUnitRepository.save(healthUnit);
+    }
+
+    @Override
+    public void delete(Long id) {
+        var healthUnit = findByIdOr404(id);
+        healthUnitRepository.delete(healthUnit);
     }
 
     @Transactional
@@ -42,15 +57,5 @@ public class HealthUnitService {
             medic.setHealthUnit(healthUnit);
             medicService.save(medic);
         });
-    }
-
-    @Transactional
-    public void save(HealthUnit healthUnit) {
-        healthUnitRepository.save(healthUnit);
-    }
-
-    public void delete(Long id) {
-        var healthUnit = findByIdOr404(id);
-        healthUnitRepository.delete(healthUnit);
     }
 }

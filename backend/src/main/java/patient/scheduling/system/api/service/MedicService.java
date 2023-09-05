@@ -11,28 +11,42 @@ import patient.scheduling.system.api.domain.enums.StatusENUM;
 import patient.scheduling.system.api.repository.MedicRepository;
 
 import java.time.*;
-import java.time.chrono.ChronoLocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class MedicService {
+public class MedicService implements BaseService<Medic> {
     private final MedicRepository medicRepository;
     private final ScheduleService scheduleService;
 
+    @Override
     public List<Medic> findAll() {
         return medicRepository.findAll();
     }
 
-    protected Optional<Medic> findById(Long id) {
+    @Override
+    public Optional<Medic> findById(Long id) {
         return medicRepository.findById(id);
     }
 
+    @Override
     public Medic findByIdOr404(Long id) {
         return findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Medic not found."));
+    }
+
+    @Override
+    @Transactional
+    public Medic save(Medic medic) {
+        return medicRepository.save(medic);
+    }
+
+    @Override
+    public void delete(Long id) {
+        var medic = findByIdOr404(id);
+        medicRepository.delete(medic);
     }
 
     public List<Medic> findByHealthUnitId(Long id) {
@@ -41,7 +55,7 @@ public class MedicService {
 
     @Transactional
     public void createSchedules(Long medicId, StatusENUM status, LocalDateTime startDateTime, LocalDateTime endDateTime, Integer stepMinutes, LocalTime lunchTime, Integer lunchDurationMinutes) {
-        float duration = Duration.between(startDateTime, endDateTime).toHours()/24f;
+        float duration = Duration.between(startDateTime, endDateTime).toHours() / 24f;
 
         if (duration > 30)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Schedule duration days cannot be longer than 30");
@@ -91,15 +105,5 @@ public class MedicService {
             schedule.setMedic(medic);
             scheduleService.save(schedule);
         });
-    }
-
-    @Transactional
-    public void save(Medic medic) {
-        medicRepository.save(medic);
-    }
-
-    public void delete(Long id) {
-        var medic = findByIdOr404(id);
-        medicRepository.delete(medic);
     }
 }
