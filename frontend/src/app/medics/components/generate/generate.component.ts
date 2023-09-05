@@ -16,7 +16,7 @@ export class GenerateComponent {
   protected form: FormGroup;
   protected statusList: String[] = [];
   private timePattern: RegExp = /^\d{2}\:\d{2}$/;
-  private datePattern: RegExp = /^\d{2}\/\d{2}\/\d{4}$/
+  private dateTimePattern: RegExp = /^\d{2}\/\d{2}\/\d{4} \d{2}\:\d{2}$/;
   private medic: Medic;
 
   constructor(
@@ -30,11 +30,9 @@ export class GenerateComponent {
 
     this.form = this.formBuilder.group({
       status: ['', [Validators.required]],
-      startTime: ['', [Validators.required, Validators.pattern(this.timePattern)]],
-      endTime: ['', [Validators.required, Validators.pattern(this.timePattern)]],
+      startDateTime: ['', [Validators.required, Validators.pattern(this.dateTimePattern)]],
+      endDateTime: ['', [Validators.required, Validators.pattern(this.dateTimePattern)]],
       stepMinutes: [0, [Validators.required]],
-      startDate: ['', [Validators.required, Validators.pattern(this.datePattern)]],
-      scheduleDurationDays: [0, [Validators.required]],
       lunchTime: ['', [Validators.required, Validators.pattern(this.timePattern)]],
       lunchDurationMinutes: [0, [Validators.required]]
     });

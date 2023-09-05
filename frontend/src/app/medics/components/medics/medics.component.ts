@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Observable, catchError, of } from 'rxjs';
 import { MedicsService } from '../../service/medics.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Medic } from '../../domain/medic';
@@ -49,8 +48,8 @@ export class MedicsComponent {
     this.medicsService.delete(medic.id)
       .subscribe({
         next: () => {
-          this.medicsService.onSuccess("Success on delete")
-          //this.medics$ = this.refresh()
+          this.medicsService.onSuccess("Success on delete");
+          window.location.reload();
         },
         error: () => this.medicsService.onError('Error on delete medic.')
       })

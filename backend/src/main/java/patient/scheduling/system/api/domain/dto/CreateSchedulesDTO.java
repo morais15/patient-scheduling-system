@@ -6,29 +6,24 @@ import jakarta.validation.constraints.NotNull;
 import patient.scheduling.system.api.domain.enums.StatusENUM;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public record CreateSchedulesDTO(
         @NotNull
         StatusENUM status,
         @NotNull
-        @Schema(implementation = String.class, example = "00:00", pattern = "HH:mm")
-        @JsonFormat(pattern = "HH:mm")
-        LocalTime startTime,
+        @Schema(implementation = String.class, example = "31/12/1970 23:59", pattern = "dd/MM/yyyy HH:mm")
+        @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+        LocalDateTime startDateTime,
         @NotNull
-        @Schema(implementation = String.class, example = "00:00", pattern = "HH:mm")
-        @JsonFormat(pattern = "HH:mm")
-        LocalTime endTime,
+        @Schema(implementation = String.class, example = "31/12/1970 23:59", pattern = "dd/MM/yyyy HH:mm")
+        @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+        LocalDateTime endDateTime,
         @NotNull
-        Long stepMinutes,
+        Integer stepMinutes,
         @NotNull
-        @Schema(implementation = String.class, example = "01/01/1970", pattern = "dd/MM/yyyy")
-        @JsonFormat(pattern = "dd/MM/yyyy")
-        LocalDate startDate,
-        @NotNull
-        Integer scheduleDurationDays,
-        @NotNull
-        @Schema(implementation = String.class, example = "00:00", pattern = "HH:mm")
+        @Schema(implementation = String.class, example = "23:59", pattern = "HH:mm")
         @JsonFormat(pattern = "HH:mm")
         LocalTime lunchTime,
         @NotNull

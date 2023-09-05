@@ -76,11 +76,9 @@ public class MedicController {
         medicService.createSchedules(
                 medicId,
                 csd.status(),
-                csd.startTime(),
-                csd.endTime(),
+                csd.startDateTime(),
+                csd.endDateTime(),
                 csd.stepMinutes(),
-                csd.startDate(),
-                csd.scheduleDurationDays(),
                 csd.lunchTime(),
                 csd.lunchDurationMinutes()
         );

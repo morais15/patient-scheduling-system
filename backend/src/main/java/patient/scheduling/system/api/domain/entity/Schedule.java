@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import patient.scheduling.system.api.domain.enums.StatusENUM;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Entity
@@ -18,10 +17,16 @@ public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+    @Column(nullable = false)
     private LocalDateTime dateTime;
+
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private StatusENUM status;
+
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Medic medic;
 }

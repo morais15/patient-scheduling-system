@@ -10,9 +10,8 @@ import patient.scheduling.system.api.domain.entity.Schedule;
 import patient.scheduling.system.api.domain.enums.StatusENUM;
 import patient.scheduling.system.api.repository.MedicRepository;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.*;
+import java.time.chrono.ChronoLocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -41,30 +40,44 @@ public class MedicService {
     }
 
     @Transactional
-    public void createSchedules(Long medicId, StatusENUM status, LocalTime startTime, LocalTime endTime, Long stepMinutes, LocalDate startDate, Integer scheduleDurationDays, LocalTime lunchTime, Integer lunchDurationMinutes) {
-        if (scheduleDurationDays > 180)
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Schedule duration days cannot be longer than 180");
+    public void createSchedules(Long medicId, StatusENUM status, LocalDateTime startDateTime, LocalDateTime endDateTime, Integer stepMinutes, LocalTime lunchTime, Integer lunchDurationMinutes) {
+        float duration = Duration.between(startDateTime, endDateTime).toHours()/24f;
+
+        if (duration > 30)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Schedule duration days cannot be longer than 30");
+
+        if (duration < 0)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Start date can not be after than end date");
 
         List<Schedule> schedules = new ArrayList<>();
-        var actualDate = startDate;
-        var actualTime = startTime;
-        var dayOfWeek = actualDate.getDayOfWeek();
 
-        for (int i = 0; i < scheduleDurationDays; i++) {
+        var actualDateTime = startDateTime;
+
+        int plusHours = Math.abs(endDateTime.getHour() - startDateTime.getHour());
+        int plusMinutes = Math.abs(endDateTime.getMinute() - startDateTime.getMinute());
+        var dayEndDateTime = startDateTime.plusHours(plusHours).plusMinutes(plusMinutes);
+
+        var dayOfWeek = actualDateTime.getDayOfWeek();
+
+        for (int i = 0; i < duration; i++) {
             if (dayOfWeek != DayOfWeek.SATURDAY && dayOfWeek != DayOfWeek.SUNDAY) {
-                while (actualTime.isBefore(endTime)) {
-                    if (actualTime.isBefore(lunchTime) || actualTime.isAfter(lunchTime.plusMinutes(lunchDurationMinutes - 1))) {
-                        var dateTime = actualDate.atTime(actualTime);
-                        var schedule = new Schedule(null, dateTime, status, null);
+                while (actualDateTime.isBefore(dayEndDateTime)) {
+                    if (actualDateTime.toLocalTime().isBefore(lunchTime) || actualDateTime.toLocalTime().isAfter(lunchTime.plusMinutes(lunchDurationMinutes - 1))) {
+                        var schedule = new Schedule(null, actualDateTime, status, null);
                         schedules.add(schedule);
                     }
-                    actualTime = actualTime.plusMinutes(stepMinutes);
+                    actualDateTime = actualDateTime.plusMinutes(stepMinutes);
                 }
             }
 
-            actualDate = actualDate.plusDays(1);
-            actualTime = startTime;
-            dayOfWeek = actualDate.getDayOfWeek();
+            actualDateTime = actualDateTime.plusDays(1);
+            actualDateTime = actualDateTime.withHour(startDateTime.getHour()).withMinute(startDateTime.getMinute());
+
+            plusHours = Math.abs(endDateTime.getHour() - actualDateTime.getHour());
+            plusMinutes = Math.abs(endDateTime.getMinute() - actualDateTime.getMinute());
+            dayEndDateTime = actualDateTime.plusHours(plusHours).plusMinutes(plusMinutes);
+
+            dayOfWeek = actualDateTime.getDayOfWeek();
         }
 
         addSchedules(medicId, schedules);

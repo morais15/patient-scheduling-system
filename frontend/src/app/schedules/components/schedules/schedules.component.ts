@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Schedule } from '../../domain/schedule';
-import { Observable, catchError, of } from 'rxjs';
 import { SchedulesService } from '../../service/schedules.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -42,7 +41,7 @@ export class SchedulesComponent {
       .subscribe({
         next: () => {
           this.schedulesService.onSuccess("Success on delete");
-          //this.schedules = this.refresh();
+          window.location.reload();
         },
         error: () => this.schedulesService.onError('Error on delete schedule.')
       })

@@ -1,12 +1,9 @@
 package patient.scheduling.system.api.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Entity
 @Data
@@ -16,8 +13,14 @@ public class Medic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(length = 50, nullable = false)
     private String name;
+
+    @Column(length = 50, nullable = false)
     private String specialty;
+
     @ManyToOne
+    @JoinColumn(nullable = false)
     private HealthUnit healthUnit;
 }

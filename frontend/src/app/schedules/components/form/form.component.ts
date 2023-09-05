@@ -16,6 +16,7 @@ export class FormComponent {
   protected form: FormGroup;
   protected statusList: String[] = [];
   protected medics: Medic[] = [];
+  private dateTimePattern: RegExp = /^\d{2}\/\d{2}\/\d{4} \d{2}\:\d{2}$/;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -28,7 +29,7 @@ export class FormComponent {
     this.form = this.formBuilder.group({
       id: schedule.id,
       medicId: schedule.medic?.id,
-      dateTime: [schedule.dateTime, [Validators.required, Validators.pattern(/^\d{2}\/\d{2}\/\d{4} \d{2}\:\d{2}$/)]],
+      dateTime: [schedule.dateTime, [Validators.required, Validators.pattern(this.dateTimePattern)]],
       status: [schedule.status, [Validators.required, Validators.minLength(2), Validators.maxLength(20)]]
     })
 
