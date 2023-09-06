@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import patient.scheduling.system.api.domain.entity.Patient;
+import patient.scheduling.system.api.domain.enums.StatusENUM;
 import patient.scheduling.system.api.repository.PatientRepository;
 
 import java.util.List;
@@ -35,6 +36,10 @@ public class PatientService implements BaseService<Patient> {
     @Override
     @Transactional
     public Patient save(Patient value) {
+        if (value.getSchedule().getStatus() != StatusENUM.FREE)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Schedule status can be FREE");
+
+        value.getSchedule().setStatus(StatusENUM.SCHEDULED);
         return patientRepository.save(value);
     }
 
@@ -42,5 +47,9 @@ public class PatientService implements BaseService<Patient> {
     public void delete(Long id) {
         var patient = findByIdOr404(id);
         patientRepository.delete(patient);
+    }
+
+    public List<Patient> findByScheduleId(Long scheduleId) {
+        return patientRepository.findBySchedule_id(scheduleId);
     }
 }

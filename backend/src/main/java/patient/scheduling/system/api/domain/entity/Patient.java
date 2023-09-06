@@ -21,5 +21,6 @@ public class Patient {
     private String identity;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Schedule schedule;
 }
