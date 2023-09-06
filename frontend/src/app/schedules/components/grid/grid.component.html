@@ -2,39 +2,49 @@
 
   <!-- Id Column -->
   <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef class="id-column"> Id </mat-header-cell>
-      <mat-cell *matCellDef="let element" class="id-column"> {{element.id}} </mat-cell>
+    <mat-header-cell *matHeaderCellDef class="id-column"> Id </mat-header-cell>
+    <mat-cell *matCellDef="let element" class="id-column"> {{element.id}} </mat-cell>
   </ng-container>
 
   <!-- DateTime Column -->
   <ng-container matColumnDef="dateTime">
-      <mat-header-cell *matHeaderCellDef> Date Time </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.dateTime}} </mat-cell>
+    <mat-header-cell *matHeaderCellDef> Date Time </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.dateTime}} </mat-cell>
   </ng-container>
 
   <!-- Status Column -->
   <ng-container matColumnDef="status">
-      <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.status}} </mat-cell>
+    <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.status}} </mat-cell>
+  </ng-container>
+
+  <!-- Patient Column -->
+  <ng-container matColumnDef="patient">
+    <mat-header-cell *matHeaderCellDef> Patient Name </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.patient?.name}} </mat-cell>
   </ng-container>
 
   <!-- Actions Column -->
   <ng-container matColumnDef="actions">
-      <mat-header-cell *matHeaderCellDef class="action-column">
-          <button mat-mini-fab color="primary" (click)="onAdd()">
-              <mat-icon>add</mat-icon>
-          </button>
-      </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef class="action-column">
+      <button mat-mini-fab color="primary" (click)="onAdd()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </mat-header-cell>
 
-      <mat-cell *matCellDef="let element" class="action-column">
-          <button mat-icon-button (click)="onEdit(element)">
-              <mat-icon>edit</mat-icon>
-          </button>
+    <mat-cell *matCellDef="let element" class="action-column">
+      <button mat-icon-button (click)="onPatient(element)">
+        <mat-icon>person</mat-icon>
+      </button>
 
-          <button mat-icon-button (click)="onDelete(element)">
-              <mat-icon>delete</mat-icon>
-          </button>
-      </mat-cell>
+      <button mat-icon-button (click)="onEdit(element)">
+        <mat-icon>edit</mat-icon>
+      </button>
+
+      <button mat-icon-button (click)="onDelete(element)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-cell>
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

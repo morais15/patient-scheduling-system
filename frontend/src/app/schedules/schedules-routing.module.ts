@@ -4,6 +4,7 @@ import { SchedulesComponent } from './components/schedules/schedules.component';
 import { FormComponent } from './components/form/form.component';
 import { scheduleResolver } from './guard/schedule/schedule.resolver';
 import { schedulesResolver } from './guard/schedules/schedules.resolver';
+import { PatientComponent } from './components/patient/patient.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,11 @@ const routes: Routes = [
   {
     path: 'edit/:id',
     component: FormComponent,
+    resolve: { schedule: scheduleResolver }
+  },
+  {
+    path: 'patient/:id',
+    component: PatientComponent,
     resolve: { schedule: scheduleResolver }
   }
 ];

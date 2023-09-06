@@ -11,8 +11,9 @@ export class GridComponent {
   @Output() add = new EventEmitter();
   @Output() edit = new EventEmitter();
   @Output() delete = new EventEmitter();
+  @Output() patient = new EventEmitter();
 
-  readonly displayedColumns = ['id', 'dateTime', 'status', 'actions']
+  readonly displayedColumns = ['id', 'dateTime', 'status', 'patient', 'actions']
 
   onAdd() {
     this.add.emit(true)
@@ -24,5 +25,9 @@ export class GridComponent {
 
   onDelete(schedule: Schedule) {
     this.delete.emit(schedule)
+  }
+
+  onPatient(schedule: Schedule) {
+    this.patient.emit(schedule)
   }
 }

@@ -77,7 +77,7 @@ public class MedicService implements BaseService<Medic> {
             if (dayOfWeek != DayOfWeek.SATURDAY && dayOfWeek != DayOfWeek.SUNDAY) {
                 while (actualDateTime.isBefore(dayEndDateTime)) {
                     if (actualDateTime.toLocalTime().isBefore(lunchTime) || actualDateTime.toLocalTime().isAfter(lunchTime.plusMinutes(lunchDurationMinutes - 1))) {
-                        var schedule = new Schedule(null, actualDateTime, status, null);
+                        var schedule = new Schedule(null, actualDateTime, status, null, null);
                         schedules.add(schedule);
                     }
                     actualDateTime = actualDateTime.plusMinutes(stepMinutes);

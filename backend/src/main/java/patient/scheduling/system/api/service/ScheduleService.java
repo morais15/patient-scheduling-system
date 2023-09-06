@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import patient.scheduling.system.api.domain.entity.Schedule;
+import patient.scheduling.system.api.domain.enums.StatusENUM;
 import patient.scheduling.system.api.repository.ScheduleRepository;
 
 import java.time.LocalDateTime;
@@ -16,6 +17,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ScheduleService implements BaseService<Schedule> {
     private final ScheduleRepository scheduleRepository;
+    private final PatientService patientService;
 
     @Override
     public List<Schedule> findAll() {
@@ -36,12 +38,22 @@ public class ScheduleService implements BaseService<Schedule> {
     @Override
     @Transactional
     public Schedule save(Schedule schedule) {
-        var saved = findByMedicIdAndDateTime(schedule.getMedic().getId(), schedule.getDateTime());
-        if (saved.isPresent()) {
-            saved.get().setStatus(schedule.getStatus());
-            return scheduleRepository.save(saved.get());
+        var scheduleSaved = findByMedicIdAndDateTime(schedule.getMedic().getId(), schedule.getDateTime());
+
+        var patient = schedule.getPatient();
+
+        if (scheduleSaved.isPresent()) {
+            schedule = scheduleSaved.get();
         }
 
+        if (patient != null) {
+            patient = patientService
+                    .findByIdentity(patient.getIdentity())
+                    .orElse(patientService.save(patient));
+            schedule.setStatus(StatusENUM.SCHEDULED);
+        }
+
+        schedule.setPatient(patient);
         return scheduleRepository.save(schedule);
     }
 

@@ -29,4 +29,7 @@ public class Schedule {
     @ManyToOne
     @JoinColumn(nullable = false)
     private Medic medic;
+
+    @ManyToOne
+    private Patient patient;
 }

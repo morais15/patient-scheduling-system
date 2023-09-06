@@ -6,10 +6,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import patient.scheduling.system.api.domain.dto.PatientDTO;
 import patient.scheduling.system.api.domain.dto.ScheduleDTO;
+import patient.scheduling.system.api.domain.entity.Patient;
 import patient.scheduling.system.api.domain.entity.Schedule;
 import patient.scheduling.system.api.domain.enums.StatusENUM;
 import patient.scheduling.system.api.service.MedicService;
+import patient.scheduling.system.api.service.PatientService;
 import patient.scheduling.system.api.service.ScheduleService;
 
 import java.util.List;
@@ -21,6 +24,7 @@ import java.util.List;
 public class ScheduleController {
     private final ScheduleService scheduleService;
     private final MedicService medicService;
+    private final PatientService patientService;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -56,6 +60,23 @@ public class ScheduleController {
         schedule.setDateTime(scheduleDTO.dateTime());
         schedule.setStatus(scheduleDTO.status());
 
+        scheduleService.save(schedule);
+    }
+
+    @PutMapping("/{id}/patient")
+    @ResponseStatus(HttpStatus.OK)
+    public void updatePatient(@PathVariable("id") Long scheduleId, @Valid @RequestBody PatientDTO patientDTO) {
+        var schedule = scheduleService.findByIdOr404(scheduleId);
+        var patientSaved = patientService.findByIdentity(patientDTO.identity());
+
+        Patient patient = new Patient();
+
+        if (patientSaved.isPresent())
+            patient = patientSaved.get();
+        else
+            BeanUtils.copyProperties(patientDTO, patient);
+
+        schedule.setPatient(patient);
         scheduleService.save(schedule);
     }
 

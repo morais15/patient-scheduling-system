@@ -27,6 +27,10 @@ export class SchedulesComponent {
     this.router.navigate(['schedules', 'edit', schedule.id])
   }
 
+  onPatient(schedule: Schedule){
+    this.router.navigate(['schedules', 'patient', schedule.id])
+  }
+
   onDelete(schedule: Schedule) {
     this.schedulesService.confirm("Do you want to delete the item?")
       .subscribe((confirm: Boolean) => {

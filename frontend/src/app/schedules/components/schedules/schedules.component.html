@@ -3,7 +3,7 @@
     <mat-toolbar color="secondary">Schedules</mat-toolbar>
 
     <app-grid *ngIf="schedules; else loading" [schedules]="schedules" (add)="onAdd()" (edit)="onEdit($event)"
-      (delete)="onDelete($event)"></app-grid>
+      (delete)="onDelete($event)" (patient)="onPatient($event)"></app-grid>
   </mat-card-content>
 </mat-card>
 

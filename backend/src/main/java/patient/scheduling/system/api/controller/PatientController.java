@@ -3,13 +3,11 @@ package patient.scheduling.system.api.controller;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import patient.scheduling.system.api.domain.dto.PatientDTO;
 import patient.scheduling.system.api.domain.entity.Patient;
 import patient.scheduling.system.api.service.PatientService;
-import patient.scheduling.system.api.service.ScheduleService;
 
 import java.util.List;
 
@@ -19,7 +17,6 @@ import java.util.List;
 @RequestMapping("/patients")
 public class PatientController {
     private final PatientService patientService;
-    private final ScheduleService scheduleService;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -33,20 +30,14 @@ public class PatientController {
         return patientService.findByIdOr404(id);
     }
 
-    @GetMapping("/schedule/{id}")
+    @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Patient> findByScheduleId(@PathVariable Long id) {
-        return patientService.findByScheduleId(id);
-    }
+    public void update(@PathVariable("id") Long id, @Valid @RequestBody PatientDTO patientDTO) {
+        var patient = patientService.findByIdOr404(id);
+        patientService.findByIdentityOr404(patientDTO.identity());
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public void save(@Valid @RequestBody PatientDTO patientDTO) {
-        var schedule = scheduleService.findByIdOr404(patientDTO.scheduleId());
-
-        var patient = new Patient();
-        patient.setSchedule(schedule);
-        BeanUtils.copyProperties(patientDTO, patient);
+        patient.setName(patientDTO.name());
+        patient.setIdentity(patientDTO.identity());
 
         patientService.save(patient);
     }

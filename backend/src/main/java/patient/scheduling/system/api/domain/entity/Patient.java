@@ -19,8 +19,4 @@ public class Patient {
 
     @Column(length = 15, nullable = false)
     private String identity;
-
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private Schedule schedule;
 }

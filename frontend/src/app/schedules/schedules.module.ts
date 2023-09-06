@@ -7,13 +7,15 @@ import { AppMaterialModule } from '../shared/app-material/app-material.module';
 import { GridComponent } from './components/grid/grid.component';
 import { FormComponent } from './components/form/form.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PatientComponent } from './components/patient/patient.component';
 
 
 @NgModule({
   declarations: [
     SchedulesComponent,
     GridComponent,
-    FormComponent
+    FormComponent,
+    PatientComponent
   ],
   imports: [
     CommonModule,

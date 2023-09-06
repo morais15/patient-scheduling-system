@@ -13,5 +13,6 @@ public record ScheduleDTO(
         @NotNull
         StatusENUM status,
         @NotNull
-        Long medicId) {
+        Long medicId,
+        PatientDTO patient) {
 }

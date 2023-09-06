@@ -10,7 +10,5 @@ public record PatientDTO(
         String name,
         @NotBlank
         @Length(min = 5, max = 15)
-        String identity,
-        @NotNull
-        Long scheduleId) {
+        String identity) {
 }

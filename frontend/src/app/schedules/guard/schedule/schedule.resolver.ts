@@ -9,5 +9,5 @@ export const scheduleResolver: ResolveFn<Schedule> = (route, state, service: Sch
     return service.findById(route.params['id'])
   }
 
-  return of({ id: 0, dateTime: '', status: '', medic: null });
+  return of({ id: 0, dateTime: '', status: '', patient: null, medic: null });
 };
