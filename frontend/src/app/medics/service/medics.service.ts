@@ -14,7 +14,7 @@ import { GenerateSchedules } from '../domain/generate-schedules';
 })
 export class MedicsService {
 
-  private readonly API_URL: String = environment.API_URL;
+  private readonly API_URL: String | undefined = environment.API_URL;
 
   constructor(
     private httpClient: HttpClient,

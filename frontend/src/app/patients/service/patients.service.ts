@@ -13,7 +13,7 @@ import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmat
 })
 export class PatientsService {
 
-  private readonly API_URL: String = environment.API_URL;
+  private readonly API_URL: String | undefined = environment.API_URL;
 
   constructor(
     private httpClient: HttpClient,
