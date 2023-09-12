@@ -38,3 +38,6 @@ out/
 
 ### LOGS ###
 /logs/
+
+### Environments ###
+.env
