@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+import patient.scheduling.system.api.domain.entity.Patient;
 import patient.scheduling.system.api.domain.entity.Schedule;
 import patient.scheduling.system.api.domain.enums.StatusENUM;
 import patient.scheduling.system.api.repository.ScheduleRepository;
@@ -39,19 +40,19 @@ public class ScheduleService implements BaseService<Schedule> {
     @Transactional
     public Schedule save(Schedule schedule) {
         var scheduleSaved = findByMedicIdAndDateTime(schedule.getMedic().getId(), schedule.getDateTime());
+        scheduleSaved.ifPresent(value -> schedule.setId(value.getId()));
 
         var patient = schedule.getPatient();
 
-        if (scheduleSaved.isPresent()) {
-            schedule = scheduleSaved.get();
-        }
-
-        if (patient != null) {
+        if (patient != null && patient.getId() == null) {
             patient = patientService
                     .findByIdentity(patient.getIdentity())
                     .orElse(patientService.save(patient));
             schedule.setStatus(StatusENUM.SCHEDULED);
         }
+
+        if (schedule.getStatus() == StatusENUM.FREE)
+            patient = null;
 
         schedule.setPatient(patient);
         return scheduleRepository.save(schedule);
